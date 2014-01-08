@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlideShareAPI", "SlideShareAPI\SlideShareAPI.csproj", "{DE3CB9CD-CDCE-4C57-92EF-AB29F999991A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlideShareAPI.Test", "SlideShareAPI.Test\SlideShareAPI.Test.csproj", "{2F285909-1DC3-4892-B580-F52ED12BDFCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{DE3CB9CD-CDCE-4C57-92EF-AB29F999991A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE3CB9CD-CDCE-4C57-92EF-AB29F999991A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE3CB9CD-CDCE-4C57-92EF-AB29F999991A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F285909-1DC3-4892-B580-F52ED12BDFCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F285909-1DC3-4892-B580-F52ED12BDFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F285909-1DC3-4892-B580-F52ED12BDFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F285909-1DC3-4892-B580-F52ED12BDFCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

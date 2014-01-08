@@ -30,24 +30,24 @@ namespace SlideShareAPI
         /// Get slideshow
         /// </summary>
         /// <param name="slideshowId">ID of the slideshow</param>
-        public string GetSlideshow(int slideshowId)
+        public Slideshows GetSlideshow(int slideshowId)
         {
             var parameters = this.GetParameterBase();
             parameters.Add("slideshow_id", slideshowId);
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/get_slideshow", parameters);
+            return GetCommand.Execute("https://www.slideshare.net/api/2/get_slideshow", parameters);
         }
 
         /// <summary>
         /// Get slideshow
         /// </summary>
         /// <param name="slideshowUrl">URL of the slideshow</param>
-        public string GetSlideshow(string slideshowUrl)
+        public Slideshows GetSlideshow(string slideshowUrl)
         {
             var parameters = this.GetParameterBase();
             parameters.Add("slideshow_url", slideshowUrl);
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/get_slideshow", parameters);
+            return GetCommand.Execute("https://www.slideshare.net/api/2/get_slideshow", parameters);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace SlideShareAPI
         /// <param name="tags">The tag to search</param>
         /// <param name="offset">OPTIONAL: Number of slideshows to skip starting from the beginning</param>
         /// <param name="limit">OPTIONAL: Restrict response to these many slideshows</param>
-        public string GetSlideshowsForTag(string tags, int offset, int limit)
+        public Slideshows GetSlideshowsForTag(string tags, int offset, int limit)
         {
             var parameters = this.GetParameterBase();
             parameters.Add("tag", tags);
@@ -72,7 +72,7 @@ namespace SlideShareAPI
                 parameters.Add("limit", limit);
             }
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/get_slideshows_by_tag", parameters);
+            return GetCommand.Execute("https://www.slideshare.net/api/2/get_slideshows_by_tag", parameters);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace SlideShareAPI
         /// <param name="groupname">Name of your group. Ex. If your group URL is http://www.slideshare.net/group/web-wednesday, then group name is web-wednesday, not Web Wednesday</param>
         /// <param name="offset">OPTIONAL: Number of slideshows to skip starting from the beginning</param>
         /// <param name="limit">OPTIONAL: Restrict response to these many slideshows</param>
-        public string GetSlideshowsForGroup(string groupname, int offset, int limit)
+        public Slideshows GetSlideshowsForGroup(string groupname, int offset, int limit)
         {
             var parameters = this.GetParameterBase();
             parameters.Add("group_name", groupname);
@@ -97,7 +97,7 @@ namespace SlideShareAPI
                 parameters.Add("limit", limit);
             }
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/get_slideshows_by_group", parameters);
+            return GetCommand.Execute("https://www.slideshare.net/api/2/get_slideshows_by_group", parameters);
         }
         
         /// <summary>
@@ -107,7 +107,7 @@ namespace SlideShareAPI
         /// <param name="username">Name of the slideshare user. Ex. If your slidespace URL is http://www.slideshare.net/gauravgupta, then group name is gauravgupta, not Gaurav Gupta</param>
         /// <param name="offset">OPTIONAL: Number of slideshows to skip starting from the beginning</param>
         /// <param name="limit">OPTIONAL: Restrict response to these many slideshows</param>
-        public string GetSlideshowsForUser(string username, int offset, int limit)
+        public Slideshows GetSlideshowsForUser(string username, int offset, int limit)
         {
             var parameters = this.GetParameterBase();
             parameters.Add("username_for", username);
@@ -122,19 +122,19 @@ namespace SlideShareAPI
                 parameters.Add("limit", limit);
             }
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/get_slideshows_by_user", parameters);
+            return GetCommand.Execute("https://www.slideshare.net/api/2/get_slideshows_by_user", parameters);
         }
 
         /// <summary>
         /// Search for slideshows
         /// </summary>
         /// <param name="query">Query string to use in search</param>
-        public string SlideshowSearch(string query)
+        public Slideshows SlideshowSearch(string query)
         {
             var parameters = this.GetParameterBase();
             parameters.Add("q", query);
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/search_slideshows", parameters);
+            return GetCommand.Execute("https://www.slideshare.net/api/2/search_slideshows", parameters);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace SlideShareAPI
         /// <param name="language">OPTIONAL: Language of slideshows (default is English, 'en')('**':All,'es':Spanish,'pt':Portuguese,'fr':French,'it':Italian,'nl':Dutch,'de':German,'zh':Chinese,'ja':Japanese,'ko':Korean,'ro':Romanian,'!!':Other) </param>
         /// <param name="sortOrder">OPTIONAL: Sort order (default is 'relevance')</param>
         /// <returns></returns>
-        public string SlideshowSearch(string query, int page, int itemsPerPage, string language, SortOrder sortOrder)
+        public Slideshows SlideshowSearch(string query, int page, int itemsPerPage, string language, SortOrder sortOrder, String uploadDate=null)
         {
             var parameters = this.GetParameterBase();
             parameters.Add("q", query);
@@ -168,9 +168,17 @@ namespace SlideShareAPI
 
             parameters.Add("sort", sortOrder);
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/search_slideshows", parameters);
+            if (String.IsNullOrEmpty(uploadDate))
+            {
+                uploadDate = UploadDate.Week;
+            }
+
+            parameters.Add("upload_date", uploadDate);
+
+            return GetCommand.Execute("https://www.slideshare.net/api/2/search_slideshows", parameters);
         }
         #endregion
+
         #region Users
         /// <summary>
         /// Get all groups for a particular user
@@ -194,7 +202,7 @@ namespace SlideShareAPI
                 parameters.Add("password", password);
             }
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/get_user_groups", parameters);
+            return GetCommand.ExecuteRaw("http://www.slideshare.net/api/2/get_user_groups", parameters);
         }
 
         /// <summary>
@@ -207,7 +215,7 @@ namespace SlideShareAPI
             var parameters = this.GetParameterBase();
             parameters.Add("username_for", usernameFor);
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/get_user_contacts", parameters);
+            return GetCommand.ExecuteRaw("http://www.slideshare.net/api/2/get_user_contacts", parameters);
         }
 
         /// <summary>
@@ -222,7 +230,7 @@ namespace SlideShareAPI
             parameters.Add("username", username);
             parameters.Add("password", password);
 
-            return GetCommand.Execute("http://www.slideshare.net/api/2/get_user_tags", parameters);
+            return GetCommand.ExecuteRaw("http://www.slideshare.net/api/2/get_user_tags", parameters);
         }
         #endregion
 
@@ -271,7 +279,7 @@ namespace SlideShareAPI
                 parameters.Add("share_with_contacts", Helper.GetYorN(shareWithContacts));
             }
 
-            return PostCommand.Execute("http://www.slideshare.net/api/2/edit_slideshow", parameters);
+            return PostCommand.Execute("https://www.slideshare.net/api/2/edit_slideshow", parameters);
         }
 
         /// <summary>
@@ -287,7 +295,7 @@ namespace SlideShareAPI
             parameters.Add("password", password);
             parameters.Add("slideshow_id", slideshowId.ToString());
 
-            return PostCommand.Execute("http://www.slideshare.net/api/2/delete_slideshow", parameters);
+            return PostCommand.Execute("https://www.slideshare.net/api/2/delete_slideshow", parameters);
         }
 
         /// <summary>
@@ -337,7 +345,7 @@ namespace SlideShareAPI
                 parameters.Add("share_with_contacts", Helper.GetYorN(shareWithContacts));
             }
 
-            return PostCommand.Execute("http://www.slideshare.net/api/2/upload_slideshow", parameters);
+            return PostCommand.Execute("https://www.slideshare.net/api/2/upload_slideshow", parameters);
         }
         #endregion
 
